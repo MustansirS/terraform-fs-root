@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const workspace = "terraform-workspace"
+const workspace = "fs-workspace"
 
 func main() {
 	fmt.Println("Starting Terraform REPL. Commands: 'upload <file>', 'delete <file>', 'exit'")

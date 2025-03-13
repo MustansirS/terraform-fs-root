@@ -24,11 +24,12 @@ terraform-fs-root
 ├── bootstrap
 │   ├── main.tf
 ├── terraform-fs
-│   ├── main.tf
+│   └── infra
+│       ├── main.tf
 │   ├── mtcars.json
 │   ├── repl.go
 │   ├── sample.json
-│   └── terraform-workspace
+│   └── fs-workspace
 │       ├── convert.go
 │       ├── go.mod
 │       ├── go.sum
@@ -59,9 +60,9 @@ This only needs to be done the first time
 4. Run `terraform apply -auto-approve`
 
 ## Usage
-1. Navigate to `terraform-fs`
+1. Navigate to `terraform-fs/infra`
 2. Run `terraform init` and `terraform apply -auto-approve`
-3. Run `go run repl.go` to start the Terraform REPL
+3. Navigate to `terraform-fs` and run `go run repl.go` to start the Terraform REPL
 4. Once the REPL starts, you can use commands like:
 ```
 > upload sample.json
