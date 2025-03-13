@@ -20,3 +20,5 @@ terraform.log
 # Ignore sensitive variable files (optional)
 *.auto.tfvars
 *.auto.tfvars.json
+
+.DS_Store

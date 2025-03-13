@@ -58,10 +58,7 @@ func handleCmd(fileName string, cmd string) error {
 	info, err := os.Stat(workspace)
 	if err != nil {
 		if os.IsNotExist(err) {
-			fmt.Println("Workspace directory does not exist, creating it...")
-			if err := os.MkdirAll(workspace, 0755); err != nil {
-				return fmt.Errorf("failed to create workspace: %v", err)
-			}
+			return fmt.Errorf("Workspace directory does not exist: %s", workspace)
 		} else {
 			return fmt.Errorf("error checking workspace: %v", err)
 		}
