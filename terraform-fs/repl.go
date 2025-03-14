@@ -27,8 +27,18 @@ func checkConfigDir() error {
 	return nil
 }
 
+func printUsage() {
+	fmt.Println("\nUsage:")
+	fmt.Println("  upload <file>      - Upload a JSON file and process it.")
+	fmt.Println("  delete <file>      - Delete a specific uploaded file.")
+	fmt.Println("  delete all         - Delete all uploaded files.")
+	fmt.Println("  list               - List all uploaded files.")
+	fmt.Println("  exit               - Exit the REPL.")
+}
+
 func main() {
-	fmt.Println("Starting Terraform REPL. Commands: 'upload <file>', 'delete <file>', 'exit'")
+	fmt.Println("Starting Terraform FS REPL")
+	printUsage()
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -43,6 +53,10 @@ func main() {
 		}
 
 		parts := strings.Fields(input)
+
+		if len(parts) == 0 {
+			continue
+		}
 
 		cmd := parts[0]
 		switch cmd {
@@ -81,8 +95,9 @@ func main() {
 		case "exit":
 			fmt.Println("Exiting REPL...")
 			os.Exit(0)
-		case "default":
-			fmt.Println("Unknown command. Use 'upload <file>' or 'delete <file>'")
+		default:
+			fmt.Println("Unknown command.")
+			printUsage()
 		}
 	}
 }
@@ -125,9 +140,11 @@ func handleList() error {
 				continue
 			}
 			if ws == activeWorkspace {
-				fmt.Printf("- %s (active)\n", ws)
+				fmt.Printf("- %s.json *\n", ws)
+				fmt.Printf("- %s.parquet *\n", ws)
 			} else {
-				fmt.Printf("- %s\n", ws)
+				fmt.Printf("- %s.json\n", ws)
+				fmt.Printf("- %s.parquet\n", ws)
 			}
 		}
 	}
@@ -331,7 +348,11 @@ func runCmd(workingDir, command string, args ...string) (string, error) {
 
 	cmd := exec.Command("sh", "-c", finalCmd)
 	cmd.Dir = workingDir
+
+	// If we want terraform outputs additionally in the REPL, we could also do
+	// cmd.Stdout = io.MultiWriter(os.Stdout, &outputBuffer)
 	cmd.Stdout = &outputBuffer
+
 	cmd.Stderr = os.Stderr
 
 	err := cmd.Run()
