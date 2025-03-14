@@ -1,6 +1,6 @@
 # Terraform FS Project 🚀
 
-This project provides a **Terraform REPL (Read-Eval-Print Loop)** that allows users to manage AWS infrastructure (a file system in this case) dynamically using Terraform. It enables:
+This project provides a **Terraform REPL (Read-Eval-Print Loop)** that allows users to manage AWS infrastructure (a file system in this case) dynamically using Terraform Workspaces. It enables:
 - **Uploading files** and managing their lifecycle via Terraform.
 - **Automatic JSON-to-Parquet conversion** before storage.
 - **State management with S3 backend**.
@@ -9,7 +9,7 @@ This project provides a **Terraform REPL (Read-Eval-Print Loop)** that allows us
 
 ## 🚀 Features
 - **Interactive REPL**: Run Terraform commands dynamically.
-- **Automated state management**: Uses **S3 backend** to store Terraform state files.
+- **Automated state management**: Uses **S3 backend** to store Terraform state files in their own workspaces.
 - **Secure storage**: Server-side Encryption using **AWS KMS**.
 - **JSON to Parquet conversion**: Automatically converts `.json` files to `.parquet` before uploading.
 
@@ -29,7 +29,7 @@ terraform-fs-root
 │   ├── mtcars.json
 │   ├── repl.go
 │   ├── sample.json
-│   └── fs-workspace
+│   └── fs-terraform-config
 │       ├── convert.go
 │       ├── go.mod
 │       ├── go.sum
@@ -66,6 +66,9 @@ This only needs to be done the first time
 4. Once the REPL starts, you can use commands like:
 ```
 > upload sample.json
+> list
 > delete sample.json
+> upload mtcars.json
+> delete all
 > exit
 ```
